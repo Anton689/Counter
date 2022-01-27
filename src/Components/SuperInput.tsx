@@ -1,15 +1,15 @@
-import React, {useState, ChangeEvent} from 'react';
+import React, {ChangeEvent} from 'react';
 
 type SuperInputType = {
     value: number
-    onChange: (value: number)=> void
+    onChange: (value: string)=> void
 
 }
 
-export const SuperInput = ({value, onChange, ...props}: SuperInputType) => {
+export const SuperInput = ({value, onChange}: SuperInputType) => {
 
     const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
-        onChange(parseInt(e.currentTarget.value))
+        onChange(e.currentTarget.value)
     }
 
     return (

@@ -1,4 +1,4 @@
-import React, {useState, ChangeEvent, useEffect} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import s from './Components/Style.module.css';
 import {Counter} from './Components/Counter';
@@ -14,6 +14,7 @@ function App() {
     let [counter, setCounter] = useState<number>(minNumberValue);
 
 
+
     const setValue = () => {
         localStorage.setItem('minNumber', JSON.stringify(minNumberValue))
         localStorage.setItem('maxNumber', JSON.stringify(maxNumberValue))
@@ -21,20 +22,17 @@ function App() {
 
     }
 
-
-    // const changeMaxValue = (value: number) => {
-    //     setMaxNumberValue(value)
-    // }
-    //
-    // const changeMinValue = (value: number) => {
-    //     setMinNumberValue(value)
-    //     setCounter(value)
-    // }
-
-
     const increaseButton = () => counter < maxNumberValue ? setCounter(++counter) : counter
 
     const resetButton = () => setCounter(minNumberValue)
+
+    const resetAll =() => {
+        localStorage.clear()
+        setMinNumberValue('0')
+        setMaxNumberValue('0')
+        setCounter(0)
+    }
+
 
     return (
         <div>
@@ -50,9 +48,9 @@ function App() {
                 maxNumberValue={maxNumberValue}
                 setMinNumberValue={setMinNumberValue}
                 setMaxNumberValue={setMaxNumberValue}
-                counter={counter}/>
-                {/*// changeMaxValue={}*/}
-                {/*// changeMinValue={}/>*/}
+                counter={counter}
+                resetAll={resetAll}/>
+
         </div>
     );
 }

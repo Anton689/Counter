@@ -1,16 +1,13 @@
 import React from 'react';
-import s from './Style.module.css';
 
 type propsType = {
     counter: number;
-    maxNumberValue: number;
+    styles: any;
 }
 
-export function Scoreboard({counter, maxNumberValue}: propsType) {
-
-    const inputStyle = counter === maxNumberValue ? s.scoreboardMax : '';
+export function Scoreboard({counter, styles}: propsType) {
 
     return <div>
-        <input value={counter} className={inputStyle} readOnly/>
+        <input value={counter} className={styles} readOnly/>
     </div>
 }
