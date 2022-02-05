@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import s from './Style.module.css';
-import {Button} from './Button';
+import {SuperButton} from './SuperButton';
 import {SuperInput} from './SuperInput';
 
 export type CounterSetWindowType = {
@@ -11,7 +11,7 @@ export type CounterSetWindowType = {
     setMinNumberValue: (value: number) => void
     setMaxNumberValue: (value: number) => void
     counter: number
-    resetAll: () => void
+    // resetAll: () => void
 }
 
 export const CounterSetWindow = ({
@@ -22,6 +22,7 @@ export const CounterSetWindow = ({
                                  }: CounterSetWindowType) => {
 
     let [isDisable, setIsDisable] = useState(true)
+
 
 
     const setMaxHandler = (value: string) => {
@@ -38,31 +39,29 @@ export const CounterSetWindow = ({
         setIsDisable(true)
     }
 
-    const resetAllHandler = () => {
-        props.resetAll()
-        setIsDisable(true)
-    }
+    // const resetAllHandler = () => {
+    //     props.resetAll()
+    //     setIsDisable(true)
+    // }
 
     return (
-        <div>
-            <div className={s.App}>
-                <div className={s.setOptions}>
-                    <div>
-                        <span>max value: </span> <span> <SuperInput value={maxNumberValue}
-                                                                    onChange={setMaxHandler}/> </span>
+            <div >
+                <div className={s.counterSet}>
+
+                    <div className={s.setMaxInput}>
+                        <SuperInput label="MAX" value={maxNumberValue} onChange={setMaxHandler}/>
                     </div>
-                    <div>
-                        <span>min value: </span> <span> <SuperInput value={minNumberValue}
-                                                                    onChange={setMinHandler}/> </span>
+
+                    <div className={s.setMinInput}>
+                        <SuperInput label="MIN" value={minNumberValue} onChange={setMinHandler}/>
                     </div>
                 </div>
                 <div className={s.setButton}>
-                    <Button name={'Set'} onClick={onClickSetHandler} disabled={isDisable}/>
-                    <Button name={'Reset all '} onClick={resetAllHandler} />
+                    <SuperButton name={'Set'} onClick={onClickSetHandler} disabled={isDisable}/>
                 </div>
 
             </div>
-        </div>
+
     );
 };
 
