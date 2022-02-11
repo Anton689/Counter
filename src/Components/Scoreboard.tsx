@@ -12,7 +12,8 @@ type propsType = {
 
 export function Scoreboard({counter, styles, maxNumberValue}: propsType) {
 
-    const styleInput = counter === maxNumberValue ? <Input defaultValue="Error" error inputProps={{ 'aria-label': 'description' }} value={counter} className={styles} readOnly/>
+    const styleInput = counter === maxNumberValue
+        ? <Input defaultValue="Error" error inputProps={{ 'aria-label': 'description' }} value={counter} className={styles} readOnly/>
         : <Input defaultValue="" inputProps={{ 'aria-label': 'description' }} value={counter} className={styles} readOnly/>
 
     return <div>
