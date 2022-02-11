@@ -2,36 +2,38 @@ import React, {useEffect, useState} from 'react';
 import s from './Style.module.css';
 import {Scoreboard} from './Scoreboard';
 import {SuperButton} from './SuperButton';
-import Icon from '@material-ui/core/Icon';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 type CounterPropsType = {
-    minNumberValue: number
-    maxNumberValue: number
-    counter: number
+    minValue: number
+    maxValue: number
+    counter1: number
     increaseButton: () => void
     resetButton: () => void
 
 }
-export const Counter = ({minNumberValue, maxNumberValue, counter, increaseButton, resetButton}: CounterPropsType) => {
+export const Counter = (props: CounterPropsType) => {
+
+        const {
+            minValue,
+            maxValue,
+            counter1,
+            increaseButton,
+            resetButton,
+
+        } = props
 
         let [error, setError] = useState(false)
         let [isDisableInc, setIsDisableInc] = useState(true)
         let [isDisableReset, setIsDisableReset] = useState(true)
 
-        let isEqual = minNumberValue === maxNumberValue
-        let isMaxLessMin = maxNumberValue < minNumberValue
-        let isMinLessZero = minNumberValue < 0
-        let isMaxLessZero = maxNumberValue < 0
+        let isEqual = minValue === maxValue
+        let isMaxLessMin = maxValue < minValue
+        let isMinLessZero = minValue < 0
+        let isMaxLessZero = maxValue < 0
 
 
         useEffect(() => {
-                //
-                //
-                //     const data =JSON.parse(localStorage.getItem("test") || "0")
-                //
-                //     setData(data )
-
                 if (isEqual || isMaxLessMin || isMinLessZero || isMaxLessZero) {
                     setError(true)
                     setIsDisableInc(true)
@@ -41,52 +43,55 @@ export const Counter = ({minNumberValue, maxNumberValue, counter, increaseButton
                     setIsDisableInc(false)
                     setIsDisableReset(false)
                 }
-            }, [minNumberValue, maxNumberValue, error]
+            }, [minValue, maxValue, error]
         )
 
         useEffect(() => {
-            if (counter === maxNumberValue) {
+            if (counter1 === maxValue) {
                 setIsDisableInc(true)
             } else {
                 setIsDisableInc(false)
             }
 
-        }, [counter])
+        }, [counter1])
 
         useEffect(() => {
-            if (counter === minNumberValue) {
+            if (counter1 === minValue) {
                 setIsDisableReset(true)
             } else {
                 setIsDisableReset(false)
             }
 
-        }, [counter])
+        }, [counter1])
 
 
         return (
             <>
-                    <div className={s.scoreboard}>
-                        {!error ?
-                            <Scoreboard maxNumberValue={maxNumberValue} counter={counter} styles={counter === maxNumberValue ? s.scoreboardMax : ''}/> :
-                            <ErrorOutlineIcon color="secondary"
-                                              fontSize="large"
-                            >add_circle</ErrorOutlineIcon>}
+                <div className={s.scoreboard}>
+                    {!error ?
+                        <Scoreboard maxValue={maxValue}
+                                    counter1={counter1}
+                                    styles={counter1 === maxValue
+                                        ? s.scoreboardMax : ''}/> :
+                        <ErrorOutlineIcon color="secondary"
+                                          fontSize="large"
+                        >add_circle</ErrorOutlineIcon>}
 
-                    </div>
-                    <div className={s.buttonInc}>
-                        <SuperButton
-                            name={'Inc'}
-                            onClick={increaseButton}
-                            disabled={isDisableInc}
-                        />
-                    </div>
-                    <div className={s.buttonReset}>
-                        <SuperButton
-                            name={'Reset'}
-                            onClick={resetButton}
-                            disabled={isDisableReset}
-                        />
-                    </div>
+                </div>
+                <div className={s.buttonInc}>
+                    <SuperButton
+                        name={'Inc'}
+                        onClick={increaseButton}
+                        disabled={isDisableInc}
+                    />
+                </div>
+                <div className={s.buttonReset}>
+                    <SuperButton
+                        name={'Reset'}
+                        onClick={resetButton}
+                        disabled={isDisableReset}
+                    />
+                </div>
             </>
         );
     }

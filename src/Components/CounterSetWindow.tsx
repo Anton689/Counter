@@ -2,71 +2,61 @@ import React, {useState} from 'react';
 import s from './Style.module.css';
 import {SuperButton} from './SuperButton';
 import {SuperInput} from './SuperInput';
+import {useDispatch, useSelector} from 'react-redux';
+import {GlobalState} from '../redux/state';
+import {changeMaxNumberValueAC, changeMinNumberValueAC} from '../redux/actions';
 
 export type CounterSetWindowType = {
-    maxNumberValue: number
-    minNumberValue: number
     disabled?: boolean
     setValue: () => void
-    setMinNumberValue: (value: number) => void
-    setMaxNumberValue: (value: number) => void
-    counter: number
-    // resetAll: () => void
+    minValue: number
+    maxValue: number
 }
 
-export const CounterSetWindow = ({
+export const CounterSetWindow = (props: CounterSetWindowType) => {
 
-                                     maxNumberValue,
-                                     minNumberValue,
-                                     ...props
-                                 }: CounterSetWindowType) => {
+    const {
+        disabled,
+        setValue,
+        minValue,
+        maxValue,
+    } = props
 
     let [isDisable, setIsDisable] = useState(true)
 
-
+    const dispatch = useDispatch()
 
     const setMaxHandler = (value: string) => {
-        props.setMaxNumberValue(parseInt(value))
+        dispatch(changeMaxNumberValueAC(parseInt(value)))
         setIsDisable(false)
     }
     const setMinHandler = (value: string) => {
-        props.setMinNumberValue(parseInt(value))
+        dispatch(changeMinNumberValueAC(parseInt(value)))
         setIsDisable(false)
     }
 
     const onClickSetHandler = () => {
-        props.setValue()
+        setValue()
         setIsDisable(true)
     }
 
-    // const resetAllHandler = () => {
-    //     props.resetAll()
-    //     setIsDisable(true)
-    // }
-
     return (
-            <div >
-                <div className={s.counterSet}>
+        <div>
+            <div className={s.counterSet}>
 
-                    <div className={s.setMaxInput}>
-                        <SuperInput label="MAX" value={maxNumberValue} onChange={setMaxHandler}/>
-                    </div>
-
-                    <div className={s.setMinInput}>
-                        <SuperInput label="MIN" value={minNumberValue} onChange={setMinHandler}/>
-                    </div>
-                </div>
-                <div className={s.setButton}>
-                    <SuperButton name={'Set'} onClick={onClickSetHandler} disabled={isDisable}/>
+                <div className={s.setMaxInput}>
+                    <SuperInput label="MAX" value={maxValue} onChange={setMaxHandler}/>
                 </div>
 
+                <div className={s.setMinInput}>
+                    <SuperInput label="MIN" value={minValue} onChange={setMinHandler}/>
+                </div>
             </div>
+            <div className={s.setButton}>
+                <SuperButton name={'Set'} onClick={onClickSetHandler} disabled={isDisable}/>
+            </div>
+
+        </div>
 
     );
 };
-
-// <input type="number" value={maxValue}
-//        onChange={onMaxChangeHandler}/>
-//
-// <input type="number" value={minValue}
-//        onChange={onMinChangeHandler}/>
