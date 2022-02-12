@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import s from './Style.module.css';
 import {SuperButton} from './SuperButton';
 import {SuperInput} from './SuperInput';
-import {useDispatch, useSelector} from 'react-redux';
-import {GlobalState} from '../redux/state';
+import {useDispatch} from 'react-redux';
 import {changeMaxNumberValueAC, changeMinNumberValueAC} from '../redux/actions';
 
 export type CounterSetWindowType = {
@@ -16,7 +15,6 @@ export type CounterSetWindowType = {
 export const CounterSetWindow = (props: CounterSetWindowType) => {
 
     const {
-        disabled,
         setValue,
         minValue,
         maxValue,
@@ -25,6 +23,8 @@ export const CounterSetWindow = (props: CounterSetWindowType) => {
     let [isDisable, setIsDisable] = useState(true)
 
     const dispatch = useDispatch()
+
+
 
     const setMaxHandler = (value: string) => {
         dispatch(changeMaxNumberValueAC(parseInt(value)))

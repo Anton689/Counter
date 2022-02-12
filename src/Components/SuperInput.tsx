@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import s from './Style.module.css';
-import {Input, TextField} from '@material-ui/core';
+import {TextField} from '@material-ui/core';
 
 type SuperInputType = {
     value: number

@@ -1,16 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import s from './Components/Style.module.css';
 import {Counter} from './Components/Counter';
 import {CounterSetWindow} from './Components/CounterSetWindow';
-import {Box, Container, Paper} from '@material-ui/core';
+import {Box} from '@material-ui/core';
 import {useDispatch, useSelector} from 'react-redux';
 import {GlobalState} from './redux/state';
-import {changeCounterValueAC, resetValueAC} from './redux/actions';
+import {changeCounterValueAC, changeMaxNumberValueAC, changeMinNumberValueAC, resetValueAC} from './redux/actions';
 
 function App() {
-
-    //let startValueString = '0'
 
     const minValue = useSelector<GlobalState, number>(state => state.initialState.minNumberValue)
     const maxValue = useSelector<GlobalState, number>(state => state.initialState.maxNumberValue)
@@ -18,24 +16,29 @@ function App() {
 
     const dispatch = useDispatch()
 
-    // const setValue = () => {
-    //     localStorage.setItem('minNumber', JSON.stringify(minNumberValue))
-    //     localStorage.setItem('maxNumber', JSON.stringify(maxNumberValue))
-    //     setCounter(minNumberValue)
-    //
-    // }
-
     const increaseButton = () => dispatch(changeCounterValueAC())
-
 
     const resetButton = () => dispatch(resetValueAC())
 
-    // const resetAll = () => {
-    //     localStorage.clear()
-    //     setMinNumberValue(startValueString)
-    //     setMaxNumberValue(startValueString)
-    //     setCounter(startValueNumber)
-    // }
+    const setValue = () => {
+        localStorage.setItem('minNumber', JSON.stringify(minValue))
+        localStorage.setItem('maxNumber', JSON.stringify(maxValue))
+
+        dispatch(changeMinNumberValueAC(minValue))
+        dispatch(changeMaxNumberValueAC(maxValue))
+        dispatch(resetValueAC())
+    }
+
+    useEffect(()=>{
+        const minValue = localStorage.getItem('minNumber')
+        const maxValue = localStorage.getItem('maxNumber')
+
+        if (minValue && maxValue){
+            dispatch(changeMaxNumberValueAC(parseInt(maxValue)))
+            dispatch(changeMinNumberValueAC(parseInt(minValue)))
+        }
+        dispatch(resetValueAC())
+    },[])
 
     return (
 
@@ -57,8 +60,7 @@ function App() {
                 <CounterSetWindow
                     minValue={minValue}
                     maxValue={maxValue}
-                    setValue={()=>{}}
-                    /* resetAll={resetAll} *//>
+                    setValue={setValue}/>
             </Box>
 
         </div>

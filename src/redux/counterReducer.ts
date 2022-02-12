@@ -1,18 +1,14 @@
 import {ActionsType, CHANGE_COUNTER_VALUE, CHANGE_MAX_VALUE, CHANGE_MIN_VALUE, RESET_VALUE} from './actions';
 
-
-export type CounterStateType = {
-    minNumberValue: number
-    maxNumberValue: number
-    counter: number
-}
-const initialState: CounterStateType = {
+const initialState = {
     minNumberValue: 0,
     maxNumberValue: 0,
     counter: 0,
 }
 
-export const counterReducer = (state = initialState, action: ActionsType): CounterStateType => {
+type InitialStateType = typeof initialState
+
+export const counterReducer = (state = initialState, action: ActionsType): InitialStateType => {
 
     switch (action.type) {
         case CHANGE_MIN_VALUE:
